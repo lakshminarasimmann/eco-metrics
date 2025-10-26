@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Eco Metrics</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon rotating">🌿</span>
+                <span class="logo-text">Eco<span class="highlight">Metrics</span></span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" onclick="showSection('overview', event)">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="#carbon" class="nav-item" onclick="showSection('carbon', event)">
+                    <span class="nav-icon">🌞</span>
+                    <span>Carbon Tracker</span>
+                </a>
+                <a href="#water" class="nav-item" onclick="showSection('water', event)">
+                    <span class="nav-icon">💧</span>
+                    <span>Water Usage</span>
+                </a>
+                <a href="#sustainability" class="nav-item" onclick="showSection('sustainability', event)">
+                    <span class="nav-icon">🌱</span>
+                    <span>Sustainability</span>
+                </a>
+                <a href="#analyzer" class="nav-item" onclick="showSection('analyzer', event)">
+                    <span class="nav-icon">🔍</span>
+                    <span>Impact Analyzer</span>
+                </a>
+            </nav>
+            <a href="/" class="back-home">
+                <span class="back-icon">←</span>
+                <span>Back to Home</span>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Environmental Dashboard</h1>
+                    <p class="subtitle">Track, Analyze, Reduce</p>
+                </div>
+            </header>
+
+            <!-- Overview Section -->
+            <div id="overview" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card green">
+                        <div class="stat-icon">💧</div>
+                        <div class="stat-content">
+                            <div class="stat-value">2,450 L</div>
+                            <div class="stat-label">Water Saved</div>
+                        </div>
+                        <div class="stat-trend up">↑ 12%</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-icon">🌱</div>
+                        <div class="stat-content">
+                            <div class="stat-value">156 kg</div>
+                            <div class="stat-label">CO₂ Reduced</div>
+                        </div>
+                        <div class="stat-trend down">↓ 8%</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon">♻️</div>
+                        <div class="stat-content">
+                            <div class="stat-value">82%</div>
+                            <div class="stat-label">Recycling Rate</div>
+                        </div>
+                        <div class="stat-trend up">↑ 5%</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value">8.5/10</div>
+                            <div class="stat-label">Eco Score</div>
+                        </div>
+                        <div class="stat-trend up">↑ 15%</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Carbon Footprint Trend</h3>
+                        <canvas id="carbonChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Water Usage Breakdown</h3>
+                        <canvas id="waterChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="showSection('carbon', event)">
+                            <span class="action-icon">🌞</span>
+                            <span>Calculate Carbon</span>
+                        </button>
+                        <button class="action-btn" onclick="showSection('water', event)">
+                            <span class="action-icon">💧</span>
+                            <span>Track Water</span>
+                        </button>
+                        <button class="action-btn" onclick="showSection('sustainability', event)">
+                            <span class="action-icon">🌱</span>
+                            <span>Check Score</span>
+                        </button>
+                        <button class="action-btn" onclick="showSection('analyzer', event)">
+                            <span class="action-icon">🔍</span>
+                            <span>Analyze Impact</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carbon Calculator Section -->
+            <div id="carbon" class="section">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h2>🌞 Carbon Footprint Calculator</h2>
+                        <p>Calculate your monthly carbon emissions with detailed breakdown</p>
+                    </div>
+                    
+                    <div class="calculator-grid">
+                        <div class="input-block">
+                            <label>🚗 Transportation Distance (km/month)</label>
+                            <input type="number" id="transport" placeholder="1500" value="1500" />
+                        </div>
+                        <div class="input-block">
+                            <label>🚙 Transport Type</label>
+                            <select id="transport-type">
+                                <option value="car">Car (Gasoline)</option>
+                                <option value="bus">Bus</option>
+                                <option value="train">Train</option>
+                                <option value="motorcycle">Motorcycle</option>
+                                <option value="bicycle">Bicycle</option>
+                            </select>
+                        </div>
+                        <div class="input-block">
+                            <label>⚡ Electricity Usage (kWh/month)</label>
+                            <input type="number" id="energy" placeholder="300" value="300" />
+                        </div>
+                        <div class="input-block">
+                            <label>🗑️ Waste Generated (kg/month)</label>
+                            <input type="number" id="waste" placeholder="50" value="50" />
+                        </div>
+                        <div class="input-block">
+                            <label>♻️ Recycling Rate (%)</label>
+                            <input type="number" id="recycle" placeholder="50" value="50" min="0" max="100" />
+                        </div>
+                    </div>
+
+                    <button class="tool-btn" onclick="calculateCarbon()">
+                        <span>Calculate Footprint</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    
+                    <div id="carbon-result" class="result-box"></div>
+                    <div class="chart-wrapper" id="carbon-chart-container" style="display: none;">
+                        <canvas id="carbonBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Water Usage Section -->
+            <div id="water" class="section">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h2>💧 Water Usage Tracker</h2>
+                        <p>Estimate your household water consumption with detailed breakdown</p>
+                    </div>
+                    
+                    <div class="calculator-grid">
+                        <div class="input-block">
+                            <label>👥 Number of People</label>
+                            <input type="number" id="people" placeholder="4" value="4" min="1" />
+                        </div>
+                        <div class="input-block">
+                            <label>🚿 Showers per Week</label>
+                            <input type="number" id="showers" placeholder="14" value="14" min="0" />
+                        </div>
+                        <div class="input-block">
+                            <label>👕 Laundry Loads per Week</label>
+                            <input type="number" id="laundry" placeholder="3" value="3" min="0" />
+                        </div>
+                        <div class="input-block">
+                            <label>🍽️ Dishwasher Loads per Week</label>
+                            <input type="number" id="dishwasher" placeholder="4" value="4" min="0" />
+                        </div>
+                    </div>
+
+                    <button class="tool-btn" onclick="calculateWater()">
+                        <span>Calculate Usage</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    
+                    <div id="water-result" class="result-box"></div>
+                    <div class="chart-wrapper" id="water-chart-container" style="display: none;">
+                        <canvas id="waterBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sustainability Section -->
+            <div id="sustainability" class="section">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h2>🌱 Sustainability Index Calculator</h2>
+                        <p>Rate your eco-friendly habits (1-10 scale)</p>
+                    </div>
+                    
+                    <div class="slider-grid">
+                        <div class="slider-block">
+                            <label>⚡ Renewable Energy Usage</label>
+                            <div class="slider-container">
+                                <input type="range" id="renewable" min="1" max="10" value="5" oninput="updateValue('renewable')" />
+                                <span id="renewable-value" class="range-value">5</span>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <label>🥗 Local & Organic Food</label>
+                            <div class="slider-container">
+                                <input type="range" id="local-food" min="1" max="10" value="5" oninput="updateValue('local-food')" />
+                                <span id="local-food-value" class="range-value">5</span>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <label>🚌 Public Transport Usage</label>
+                            <div class="slider-container">
+                                <input type="range" id="public-transport" min="1" max="10" value="5" oninput="updateValue('public-transport')" />
+                                <span id="public-transport-value" class="range-value">5</span>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <label>♻️ Recycling & Composting</label>
+                            <div class="slider-container">
+                                <input type="range" id="recycling" min="1" max="10" value="5" oninput="updateValue('recycling')" />
+                                <span id="recycling-value" class="range-value">5</span>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <label>💧 Water Conservation</label>
+                            <div class="slider-container">
+                                <input type="range" id="water-conservation" min="1" max="10" value="5" oninput="updateValue('water-conservation')" />
+                                <span id="water-conservation-value" class="range-value">5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="tool-btn" onclick="calculateSustainability()">
+                        <span>Calculate My Score</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    
+                    <div id="sustainability-result" class="result-box"></div>
+                    <div class="chart-wrapper" id="sustainability-chart-container" style="display: none;">
+                        <canvas id="sustainabilityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Analyzer Section -->
+            <div id="analyzer" class="section">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h2>🔍 Environmental Impact Analyzer</h2>
+                        <p>Analyze text descriptions of your environmental activities</p>
+                    </div>
+                    
+                    <textarea id="inputText" placeholder="Describe your environmental activities (e.g., 'I commute by bicycle, use solar panels, recycle regularly...')"></textarea>
+                    
+                    <button class="tool-btn" onclick="analyzeText()">
+                        <span>Analyze Impact</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    
+                    <div id="analyzer-result" class="result-box"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
